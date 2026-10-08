@@ -1,6 +1,9 @@
-let messages = [];
+// import Message model
+import Message from '../../../models/api/v1/Message.js';
 
-export const list = (req, res)=>{
+export const list = async (req, res)=>{
+    const messages = await Message.find({});
+  
     const result = {
       'status': 'success',
       'data': {
@@ -14,18 +17,23 @@ export const get = (req, res)=>{
     res.send("GET message with id" + req.params.id);
 };
 
-export const create = (req, res)=>{
-    let message = {
-      'user': "goodbytes",
-      'text': "Hello, world!"
-    };
-    messages.push(message);
-    
-    const result = {
-      'status': 'success',
-      'data': {
-        'message': message
-      }
+export const create = async (req, res) => {
+    console.log(req.body);
+
+    try {
+        const message = new Message({
+            text: req.body.text,
+            username: req.body.username
+        });
+        const savedMessage = await message.save();
+        const result = {
+            'status': 'success',
+            'data': {
+                'message': savedMessage
+            }
+        };
+        res.json(result);
+    } catch (err) {
+        res.status(500).send("Something went wrong");
     }
-    res.json(result);
 };
