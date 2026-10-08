@@ -11,7 +11,7 @@ console.log(process.env);
 app.use(express.json());
 
 // connect to mongodb
-mongoose.connect('mongodb://127.0.0.1:27017/nodejsles');
+mongoose.connect(process.env.MONGODB);
 
 app.use("/api/v1/messages", messagesRouter);
 
