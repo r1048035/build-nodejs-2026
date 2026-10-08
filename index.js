@@ -1,13 +1,14 @@
 import express from 'express';
 import messagesRouter from './routes/api/v1/messages.js';
 import mongoose from 'mongoose';
+import "dotenv/config";
 
 const app = express();
 const port = 3000;
 
-app.use(express.json());
+console.log(process.env);
 
-console.log('Environment Variables:', process.env);
+app.use(express.json());
 
 // connect to mongodb
 mongoose.connect('mongodb://127.0.0.1:27017/nodejsles');
